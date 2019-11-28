@@ -150,18 +150,21 @@ Client* Adapter::getSecureClient(void)
 
 void Adapter::checkConnection(void)
 {
-    _proxy->checkConnection(_client);
 
     if ( _isSecure )
     {
         _proxySecure->checkConnection(_clientSecure);
+    }
+    else
+    {
+		_proxy->checkConnection(_client);
     }
 }
 
 void Adapter::send(MQTTSNPacket* packet, Client* client)
 {
     Proxy* proxy = _proxy;
-    if ( client->isSecureNetwork() && !_isSecure )
+    if ( client->isSecureNetwork() )
     {
         if ( _isSecure )
         {
@@ -212,7 +215,7 @@ Client* Adapter::getAdapterClient(Client* client)
 {
 	if ( client->isSecureNetwork() )
 	{
-		return _client;
+		return _clientSecure;
 	}
 	else
 	{
@@ -274,7 +277,7 @@ void Proxy::checkConnection(Client* client)
 
 void Proxy::resetPingTimer(void)
 {
-    _keepAliveTimer.start(QOSM1_PROXY_KEEPALIVE_DURATION * 1000UL);
+    _keepAliveTimer.start(10 * 1000UL);
 }
 
 void Proxy::recv(MQTTSNPacket* packet, Client* client)

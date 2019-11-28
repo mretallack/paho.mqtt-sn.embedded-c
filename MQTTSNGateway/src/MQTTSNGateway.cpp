@@ -327,8 +327,7 @@ bool Gateway::hasSecureConnection(void)
 {
 	return (  _params.certKey
 			&& _params.privateKey
-			&& _params.rootCApath
-			&& _params.rootCAfile );
+			&& (_params.rootCApath || _params.rootCAfile ));
 }
 /*=====================================
  Class EventQue
