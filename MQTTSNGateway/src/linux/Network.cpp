@@ -292,8 +292,6 @@ bool Network::connect(const char* host, const char* port, const char* caPath, co
 
 #if ( OPENSSL_VERSION_NUMBER >= 0x10100000L )
 			_ctx = SSL_CTX_new(TLS_client_method());
-#elif ( OPENSSL_VERSION_NUMBER >= 0x10001000L )
-			_ctx = SSL_CTX_new(TLSv1_client_method());
 #else
 			_ctx = SSL_CTX_new(SSLv23_client_method());
 #endif
